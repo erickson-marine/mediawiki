@@ -7,9 +7,8 @@ services:
   mediawiki:
     image: mediawiki
     restart: always
-    network: dmz
-    links:
-      - database
+    networks: 
+      - dmz
     volumes:
       - /var/www/html/images
       # After initial setup, download LocalSettings.php to the same directory as
@@ -19,12 +18,14 @@ services:
   database:
     image: mariadb
     restart: always
+    networks: 
+      - dmz
     environment:
       # @see https://phabricator.wikimedia.org/source/mediawiki/browse/master/includes/DefaultSettings.php
-      MYSQL_DATABASE: my_wiki
+      MYSQL_DATABASE: wiki
       MYSQL_USER: wikiuser
-      MYSQL_PASSWORD: example
-      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_PASSWORD: REDACTED
+      MYSQL_ROOT_PASSWORD: REDACTED
 
 networks:
   dmz:
